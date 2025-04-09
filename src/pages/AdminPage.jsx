@@ -4,6 +4,8 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { MdWarehouse } from "react-icons/md";
 import { FaStore } from "react-icons/fa";
+import Products from './Admin/Products';
+import AddProductForm from './Admin/AddProductForm';
 
 function AdminPage() {
   return (
@@ -21,8 +23,10 @@ function AdminPage() {
                 <Routes path="/*">
                     <Route path="/*" element={<h1>Dashboard</h1>} />
                     <Route path="/users" element={<h1>Users</h1>} />
-                    <Route path="/products" element={<h1>Products</h1>} />
+                    <Route path="/products" element={<Products />} />
                     <Route path="/orders" element={<h1>Orders</h1>} />
+                    <Route path="/addproduct" element={<AddProductForm />} />
+                   
                 </Routes>
             </div>
         </div>
