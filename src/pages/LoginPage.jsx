@@ -2,19 +2,19 @@ import React, { useState } from 'react'
 import { MdSentimentSatisfiedAlt } from 'react-icons/md'
 import axios from 'axios'
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function LoginPage() {
 
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
+  const [loading,setLoading] = useState(false)
   const navigate = useNavigate()
 
   function handleLogin() {
 
-    console.log("Email: ", email)
-    console.log("Password: ", password)
-
+    
+    setLoading(true)
     axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/login",
       {email: email,
       password: password
@@ -33,10 +33,12 @@ function LoginPage() {
           // window.location.href = "/"
           navigate("/")
       }
+      setLoading(false)
 
     }).catch((error) => {
       console.log("Login Failed", error.response.data)
       toast.error(error.response.data.message || "Login Failed")
+      setLoading(false)
     })
 
     console.log("Login button clicked")
@@ -65,7 +67,9 @@ function LoginPage() {
             }} 
             
             className="w-full h-[50px] border border-white rounded-xl text-center text-white" type="password" placeholder='Password' ></input>
-            <button onClick={handleLogin} className="w-full h-[50px] bg-amber-100 rounded-xl text-black cursor-pointer">Submit</button>
+            <button onClick={handleLogin} className="w-full h-[50px] bg-amber-100 rounded-xl text-black cursor-pointer">{loading?"Loading...":"Login"}</button>
+
+            <p>Don`t have account yet? <Link to="/register">Register Now</Link></p>
           </div>
         </div>
       </div>

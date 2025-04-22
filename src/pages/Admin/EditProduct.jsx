@@ -1,20 +1,29 @@
 import React, {useState} from 'react'
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import mediaUpload from '../../../utils/MediaUpload';
 
-function AddProductForm() {
+function EditProduct() {
 
-  const [productId, setProductId] = useState("");
-  const [productName, setProductName] = useState("");
-  const [alternativeNames, setAlternativeNames] = useState("");
-  const [price, setPrice] = useState("");
-  const [labeledPrice, setLabeledPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [images, setImages] = useState([]);
-  const [stock, setStock] = useState("");
+
+  const locationData = useLocation()
+  console.log(locationData.state)
   const navigate = useNavigate();
+  if(locationData.state == null){
+    toast.error("Please select a product to edit")
+    window.location.href = "/admin/products"
+    
+  }
+  const [productId, setProductId] = useState(locationData.state.productID);
+  const [productName, setProductName] = useState(locationData.state.name);
+  const [alternativeNames, setAlternativeNames] = useState(locationData.state.altNames.join(","));
+  const [price, setPrice] = useState(locationData.state.price);
+  const [labeledPrice, setLabeledPrice] = useState(locationData.state.labeledPrice);
+  const [description, setDescription] = useState(locationData.state.description);
+  const [images, setImages] = useState([]);
+  const [stock, setStock] = useState(locationData.state.stock);
+  
 
   async function handleSubmit() {
 
@@ -29,15 +38,20 @@ function AddProductForm() {
 
     try {
 
-    const result = await Promise.all(promiseArray)
-    console.log(result)
+    let result = await Promise.all(promiseArray)
+    
+    if(images.length == 0){
+        result = locationData.state.images
+    }
+
+
     
     
 
     const altNamesInArray = alternativeNames.split(",");
 
     const productData = {
-      productID: productId,
+      
       name: productName,
       altNames: altNamesInArray,
       price: price,
@@ -51,20 +65,21 @@ function AddProductForm() {
 
     console.log(token)
 
-    console.log(productData)
+    
 
-    await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/product/", productData,{
+    await axios.put(import.meta.env.VITE_BACKEND_URL+"/api/product/"+productId, productData,{
       headers: {
         "Authorization" : "Bearer "+token
       }
     })
 
-    toast.success("Product Added Successfully")
-    navigate("/admin/products")
+    toast.success("Product Updated Successfully");
+    navigate("/admin/products");
+ 
 
   }catch (error){
     console.log(error)
-    toast.error("Product Adding Failed")
+    toast.error("Product Updating Failed")
     
   }
   
@@ -74,11 +89,12 @@ function AddProductForm() {
     <>
       <div className="w-full h-full bg-gray-100 rounded-lg justify-center items-center flex">
         <div className="bg-white shadow-lg w-[600px] h-[650px] rounded-lg flex flex-col justify-center items-center space-y-5 px-[30px]">
-          <h1 className="text-[30px] font-semibold">Add Product</h1>
+          <h1 className="text-[30px] font-semibold">Edit Product</h1>
 
           <input
             className="w-full h-[40px] border border-black rounded-lg text-center text-black"
             type="text"
+            disabled
             placeholder="Product ID"
             value={productId}
             onChange={(e) => setProductId(e.target.value)}
@@ -152,7 +168,7 @@ function AddProductForm() {
               className="w-[150px] h-[40px] bg-green-600 text-white rounded-lg hover:bg-green-700 text-center flex justify-center items-center"
               onClick={handleSubmit}
             >
-              Add Product
+              Update
             </Link>
 
             
@@ -166,4 +182,4 @@ function AddProductForm() {
   );
 }
 
-export default AddProductForm
+export default EditProduct

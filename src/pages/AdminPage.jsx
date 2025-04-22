@@ -6,6 +6,8 @@ import { MdWarehouse } from "react-icons/md";
 import { FaStore } from "react-icons/fa";
 import Products from './Admin/Products';
 import AddProductForm from './Admin/AddProductForm';
+import EditProduct from './Admin/EditProduct';
+import RegisterPage from './Client/Register';
 
 function AdminPage() {
   return (
@@ -26,6 +28,8 @@ function AdminPage() {
                     <Route path="/products" element={<Products />} />
                     <Route path="/orders" element={<h1>Orders</h1>} />
                     <Route path="/addproduct" element={<AddProductForm />} />
+                    <Route path="/editproduct" element={<EditProduct/>} />
+                    
                    
                 </Routes>
             </div>

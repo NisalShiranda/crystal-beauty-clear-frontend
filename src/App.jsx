@@ -4,6 +4,7 @@ import AdminPage from './pages/AdminPage'
 import Login from './pages/LoginPage'
 import { Toaster } from 'react-hot-toast'
 import ImageUploadTesting from './pages/Admin/ImageUploadTesting'
+import RegisterPage from './pages/Client/Register'
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/*" element={<>404 Not Found</>} />
           <Route path="/testingImage" element={<ImageUploadTesting />}/>
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
      </BrowserRouter>
     </>
