@@ -22,7 +22,7 @@ function AdminPage() {
 
             </div>
             <div className="w-[calc(100vw-300px)] bg-white h-full rounded-lg">
-                <Routes path="/*">
+                <Routes>
                     <Route path="/*" element={<h1>Dashboard</h1>} />
                     <Route path="/users" element={<h1>Users</h1>} />
                     <Route path="/products" element={<Products />} />

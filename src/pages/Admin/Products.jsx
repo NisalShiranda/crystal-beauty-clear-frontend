@@ -49,8 +49,6 @@ function Products() {
         console.log(e)
         toast.error("Error deleting product")
       }
-
-     
   }
 
     
