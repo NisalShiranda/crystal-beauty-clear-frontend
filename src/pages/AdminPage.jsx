@@ -1,5 +1,5 @@
-import React from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { MdWarehouse } from "react-icons/md";
@@ -9,11 +9,53 @@ import AddProductForm from './Admin/AddProductForm';
 import EditProduct from './Admin/EditProduct';
 import RegisterPage from './Client/Register';
 import AdminOrders from './Admin/AdminOrders';
+import Loader from '../components/Loader';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function AdminPage() {
+
+    const [userValidated, setUserValidated] = useState(false);
+    const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if(token === null) {
+            toast.error("You are not logged in");
+            navigate("/login");
+        }else{
+        axios.get(import.meta.env.VITE_BACKEND_URL + "/api/user/current", {
+
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response) => {
+            
+            const user = response.data.user;
+            
+            if(user.role !== "admin") {
+                toast.error("You are not authorized to access this page");
+                navigate("/");
+                
+            }else{
+                setUserValidated(true)
+            }
+            
+
+            
+        }).catch(() => {
+            toast.error("Something went wrong please login");
+            setUserValidated(false);
+        });
+    }
+        
+    })
+
+
+
   return (
     <>
-        <div className="w-full h-screen bg-gray-200 flex py-2 pr-2">
+        {userValidated ?
+            <div className="w-full h-screen bg-gray-200 flex py-2 pr-2">
             <div className="w-[300px] h-full py-[10px] px-[10px] space-y-5 flex flex-col items-center ">
             
                 <Link to="/admin" className="px-[10px] py-[10px] border w-full rounded-lg flex items-center"><MdSpaceDashboard className="mr-2" />Dashboard</Link>
@@ -34,7 +76,8 @@ function AdminPage() {
                    
                 </Routes>
             </div>
-        </div>
+        </div>: <Loader />}
+        
     </>
   )
 }
