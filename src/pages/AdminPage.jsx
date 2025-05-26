@@ -8,6 +8,7 @@ import Products from './Admin/Products';
 import AddProductForm from './Admin/AddProductForm';
 import EditProduct from './Admin/EditProduct';
 import RegisterPage from './Client/Register';
+import AdminOrders from './Admin/AdminOrders';
 
 function AdminPage() {
   return (
@@ -26,7 +27,7 @@ function AdminPage() {
                     <Route path="/*" element={<h1>Dashboard</h1>} />
                     <Route path="/users" element={<h1>Users</h1>} />
                     <Route path="/products" element={<Products />} />
-                    <Route path="/orders" element={<h1>Orders</h1>} />
+                    <Route path="/orders" element={<AdminOrders />} />
                     <Route path="/addproduct" element={<AddProductForm />} />
                     <Route path="/editproduct" element={<EditProduct/>} />
                     

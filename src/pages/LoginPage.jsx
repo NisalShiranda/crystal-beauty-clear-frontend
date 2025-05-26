@@ -3,6 +3,8 @@ import { MdSentimentSatisfiedAlt } from 'react-icons/md'
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
+import { GrGoogle } from 'react-icons/gr';
 
 function LoginPage() {
 
@@ -10,6 +12,31 @@ function LoginPage() {
   const [password,setPassword] = useState("")
   const [loading,setLoading] = useState(false)
   const navigate = useNavigate()
+
+  const loginWithGoogle = useGoogleLogin(
+    {
+      onSuccess: (res) => {
+        console.log(res)
+        setLoading(true)
+        axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/google",{accessToken: res.access_token}).then((res) => {
+          console.log("Google Login Successful", res.data)
+          toast.success("Google Login Successful")
+          localStorage.setItem("token", res.data.token)
+
+          const user = res.data.user;
+
+          if(user.role === "admin"){
+              // window.location.href = "/admin"
+              navigate("/admin")
+          }else{
+              // window.location.href = "/"
+              navigate("/")
+          }
+          setLoading(false)
+        })
+      }
+    }
+    )
 
   function handleLogin() {
 
@@ -68,6 +95,15 @@ function LoginPage() {
             
             className="w-full h-[50px] border border-white rounded-xl text-center text-white" type="password" placeholder='Password' ></input>
             <button onClick={handleLogin} className="w-full h-[50px] bg-amber-100 rounded-xl text-black cursor-pointer">{loading?"Loading...":"Login"}</button>
+
+            <button className="w-full h-[50px] bg-amber-100 rounded-xl text-black cursor-pointer flex items-center justify-center" 
+            onClick={loginWithGoogle}>
+           
+            <GrGoogle className="mr-[10px]"/>
+            {
+              loading?"Loading...":"Login with Google"
+            }
+            </button>
 
             <p>Don`t have account yet? <Link to="/register">Register Now</Link></p>
           </div>
