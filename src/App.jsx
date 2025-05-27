@@ -7,7 +7,7 @@ import ImageUploadTesting from './pages/Admin/ImageUploadTesting'
 import RegisterPage from './pages/Client/Register'
 import HomePage from './pages/HomePage'
 import Checkout from './pages/Client/Checkout'
-import LoginPage from './pages/loginPage'
+import LoginPage from './pages/LoginPage'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 
