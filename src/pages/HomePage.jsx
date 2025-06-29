@@ -5,6 +5,7 @@ import ProductPage from './Client/ProductPage'
 import ProductOverview from './Client/ProductOverview'
 import CartPage from './Client/CartPage'
 import Checkout from './Client/Checkout'
+import ForgetPassword from './Client/ForgetPassword'
 
 function HomePage() {
   return (
@@ -20,6 +21,7 @@ function HomePage() {
             <Route path="/reviews" element={<h1>Reviews</h1>} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<Checkout />} />
+            
         </Routes>
       </div>
     </div>

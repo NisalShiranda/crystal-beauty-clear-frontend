@@ -1,6 +1,7 @@
 import React from 'react'
 import { TiShoppingCart } from 'react-icons/ti'
 import { Link } from 'react-router-dom'
+import Userdata from './Userdata'
 
 function Header() {
   return (
@@ -11,6 +12,7 @@ function Header() {
                 <Link to="/products">Products</Link>
                 <Link to="/contact">Contact Us</Link>
                 <Link to="/reviews">Reviews</Link>
+                <div className="absolute right-[70px] h-full"><Userdata /></div>
                 <Link to="/cart" className="
                text-3xl"><TiShoppingCart className="absolute right-[30px] top-[20px] text-center" /></Link>
             </div>

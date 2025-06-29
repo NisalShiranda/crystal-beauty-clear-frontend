@@ -9,6 +9,7 @@ import HomePage from './pages/HomePage'
 import Checkout from './pages/Client/Checkout'
 import LoginPage from './pages/LoginPage'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import ForgetPassword from './pages/Client/ForgetPassword'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/*" element={<>404 Not Found</>} />
           <Route path="/testingImage" element={<ImageUploadTesting />}/>
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
          
         </Routes>
      </BrowserRouter>

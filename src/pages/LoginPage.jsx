@@ -106,6 +106,7 @@ function LoginPage() {
             </button>
 
             <p>Don`t have account yet? <Link to="/register">Register Now</Link></p>
+            <p><Link to="/forget-password">Forget Password</Link></p>
           </div>
         </div>
       </div>
